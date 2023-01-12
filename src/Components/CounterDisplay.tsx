@@ -5,8 +5,9 @@ import {SuperButton} from "./SuperButton";
 
 export const CounterDisplay = () => {
     const [maxValueCount, setMaxValueCount] = useState(1)
-    const [startValueCount, setStartValueCount] = useState<number | null>(1)
-    const [message, setMessage] = useState<string | null>(null)
+    const [startValueCount, setStartValueCount] = useState<number | null>(null)
+    const [message, setMessage] = useState<string | null>('Нажми на "Жмяк! и узри магию!')
+
 
     const showStartNumberValue = () => {
         const startValueString = localStorage.getItem('startValueToCounter')
@@ -21,7 +22,7 @@ export const CounterDisplay = () => {
 
     const resetValueHandler = () => {
         let startValueFromLocalStorage = localStorage.getItem('startValueToCounter')
-        if (startValueFromLocalStorage) {
+        if (startValueFromLocalStorage !== null) {
             setStartValueCount(JSON.parse(startValueFromLocalStorage))
         }
         setMessage(null)
@@ -34,8 +35,25 @@ export const CounterDisplay = () => {
     }
 
 
+    let blockButton: boolean = false
+    let disabledButtonToReset = () => {
+        if (startValueCount === maxValueCount) {
+            blockButton = false
+        } else if (message !== null) {
+            blockButton = true
+        }
+        return blockButton
+    }
 
-    
+    let disabledButtonToStart = () => {
+        if (startValueCount === maxValueCount) {
+            blockButton = true
+        } else if (message !== null) {
+            blockButton = true
+        }
+        return blockButton
+    }
+
 
     return (
         <div>
@@ -46,8 +64,8 @@ export const CounterDisplay = () => {
                 {startValueCount}
                 {message}
             </div>
-            <SuperButton callback={onClickStartValue} name={"Вперед!"} stop={maxValueCount === startValueCount}/>
-            <SuperButton callback={resetValueHandler} name={"Öбнулись"}/>
+            <SuperButton callback={onClickStartValue} name={"Вперед!"} stop={disabledButtonToStart()}/>
+            <SuperButton callback={resetValueHandler} name={"Öбнулись"} stop={disabledButtonToReset()}/>
         </div>
     );
 };

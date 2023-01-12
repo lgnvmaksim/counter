@@ -4,13 +4,15 @@ import {SuperButton} from "./SuperButton";
 type PropsType = {
     showStartNumberValue: () => void
     setMessage: (title: string | null) => void
-    setStartValueCount:(value:null)=>void
+    setStartValueCount: (value: null) => void
 
 }
 
-export const ChangeNumbersValue = ({showStartNumberValue,
+export const ChangeNumbersValue = ({
+                                       showStartNumberValue,
                                        setMessage,
-                                       setStartValueCount}: PropsType) => {
+                                       setStartValueCount
+                                   }: PropsType) => {
 
     const [maxValue, setMaxValue] = useState<number>(() => {
         let valueAsString = localStorage.getItem('maxValue')
@@ -53,13 +55,13 @@ export const ChangeNumbersValue = ({showStartNumberValue,
         setStartValueCount(null)
     }
 
-     const checkCorrectValue = () => {
-         let checkCorrectValue:boolean = (startValue === maxValue || startValue > maxValue || startValue <= 0 || maxValue <= 0);
-         if (checkCorrectValue) {
-             setMessage('Ата-та по рукам! Не может быть так! Верни корректные значения!')
-         } return checkCorrectValue
-     }
-
+    const checkCorrectValue = () => {
+        let checkCorrectValue: boolean = (startValue === maxValue || startValue > maxValue || startValue <= 0 || maxValue <= 0);
+        if (checkCorrectValue) {
+            setMessage('Ата-та по рукам! Не может быть так! Верни корректные значения!')
+        }
+        return checkCorrectValue
+    }
 
 
     return <div>
@@ -73,7 +75,6 @@ export const ChangeNumbersValue = ({showStartNumberValue,
                onChange={onChangeStartValueHandler}/>
         <div><SuperButton callback={onClickSaveValuesHandler} name={'Жмяк!'} stop={checkCorrectValue()}/></div>
         <hr/>
-
 
 
     </div>

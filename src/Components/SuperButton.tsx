@@ -3,7 +3,7 @@ import React from 'react';
 type PropsType={
     callback:()=>void
     name:string
-    stop?: boolean
+    stop: boolean
 }
 
 export const SuperButton = ({callback, name, ...restProps}:PropsType) => {

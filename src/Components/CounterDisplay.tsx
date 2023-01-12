@@ -1,29 +1,53 @@
 import React, {useState} from 'react';
 import {ChangeNumbersValue} from "./ChangeNumbersValue";
+import {SuperButton} from "./SuperButton";
 
-// type PropsType={
-//
-// }
 
 export const CounterDisplay = () => {
-    const [maxValue, setMaxValue] = useState(0)
-    const [startValue, setStartValue] = useState(0)
+    const [maxValueCount, setMaxValueCount] = useState(1)
+    const [startValueCount, setStartValueCount] = useState<number | null>(1)
+    const [message, setMessage] = useState<string | null>(null)
 
     const showStartNumberValue = () => {
-        const StateString = localStorage.getItem('startValueToCounter')
-        if (StateString !== null) {
-            setStartValue(JSON.parse(StateString))
+        const startValueString = localStorage.getItem('startValueToCounter')
+        if (startValueString !== null) {
+            setStartValueCount(JSON.parse(startValueString))
+        }
+        const maxValueString = localStorage.getItem('maxValueToCounter')
+        if (maxValueString !== null) {
+            setMaxValueCount(JSON.parse(maxValueString))
         }
     }
 
+    const resetValueHandler = () => {
+        let startValueFromLocalStorage = localStorage.getItem('startValueToCounter')
+        if (startValueFromLocalStorage) {
+            setStartValueCount(JSON.parse(startValueFromLocalStorage))
+        }
+        setMessage(null)
+    }
+
+    const onClickStartValue = () => {
+        if (startValueCount) {
+            setStartValueCount(startValueCount + 1)
+        }
+    }
+
+
+
+    
+
     return (
         <div>
-            <ChangeNumbersValue showStartNumberValue={showStartNumberValue}/>
+            <ChangeNumbersValue showStartNumberValue={showStartNumberValue}
+                                setMessage={setMessage}
+                                setStartValueCount={setStartValueCount}/>
             <div>
-                {startValue}
+                {startValueCount}
+                {message}
             </div>
-            <button>Вперед!</button>
-            <button>йОбнулись</button>
+            <SuperButton callback={onClickStartValue} name={"Вперед!"} stop={maxValueCount === startValueCount}/>
+            <SuperButton callback={resetValueHandler} name={"Öбнулись"}/>
         </div>
     );
 };

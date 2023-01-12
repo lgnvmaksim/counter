@@ -7,5 +7,5 @@ type PropsType={
 }
 
 export const SuperButton = ({callback, name, ...restProps}:PropsType) => {
-    return <button onClick={callback}> {name}</button>
+    return <button onClick={callback} disabled={restProps.stop}> {name}</button>
 };

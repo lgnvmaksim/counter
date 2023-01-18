@@ -1,5 +1,23 @@
-.counter {
-    text-align: center;
+.header{
+    height: 80px;
+    background-color: #ffacff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rubik Storm', cursive;
+}
+
+.container{
     height: 100vh;
-    background-color: #f88b8b;
+    background-color: #5dd2ff;
+
+
+}
+
+.footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
 }

@@ -1,5 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {SuperButton} from "./SuperButton";
+import {SuperButton} from "../SuperButton";
+import s from './changeNumbersValue.module.css'
+
 
 type PropsType = {
     showStartNumberValue: () => void
@@ -26,15 +28,31 @@ export const ChangeNumbersValue = ({
             return JSON.parse(valueAsString)
         } else return 1
     })
+    //
+    // const [values, setValue] = useState<number>({
+    //     maxValue: 0,
+    //     startValue: 0,
+    // })
+
+
+    const setToLocalStorage = (key: string, value: number)=>{
+        localStorage.setItem(key, JSON.stringify(value))
+        localStorage.getItem(key)
+    }
 
     useEffect(() => {
-        localStorage.setItem('maxValue', JSON.stringify(maxValue))
-        localStorage.getItem('maxValue')
-    }, [maxValue])
-    useEffect(() => {
-        localStorage.setItem('startValue', JSON.stringify(startValue))
-        localStorage.getItem('startValue')
-    }, [startValue])
+        // localStorage.setItem('maxValue', JSON.stringify(maxValue))
+        // localStorage.getItem('maxValue')
+        setToLocalStorage('maxValue', maxValue)
+        setToLocalStorage('startValue', startValue)
+    }, [maxValue, startValue])
+
+    // useEffect(() => {
+    //     // localStorage.setItem('startValue', JSON.stringify(startValue))
+    //     // localStorage.getItem('startValue')
+    //
+    // }, [startValue])
+
 
     const onClickSaveValuesHandler = () => {
         localStorage.setItem('maxValueToCounter', JSON.stringify(maxValue))
@@ -64,17 +82,21 @@ export const ChangeNumbersValue = ({
     }
 
 
-    return <div>
+    return <div className={s.location}>
         <div>max value</div>
-        <input type="number"
+        <input
+            className={s.input}
+            type="number"
                value={maxValue}
                onChange={onChangeMaxValueHandler}/>
         <div>start value</div>
-        <input type="number"
+        <input
+            className={s.input}
+            type="number"
                value={startValue}
                onChange={onChangeStartValueHandler}/>
         <div><SuperButton callback={onClickSaveValuesHandler} name={'Жмяк!'} stop={checkCorrectValue()}/></div>
-        <hr/>
+
 
 
     </div>

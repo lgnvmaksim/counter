@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {ChangeNumbersValue} from "./ChangeNumbersValue";
-import {SuperButton} from "./SuperButton";
+import {ChangeNumbersValue} from "../ChangeNumbers/ChangeNumbersValue";
+import {SuperButton} from "../SuperButton";
+import s from './counterDisplay.module.css'
 
 
 export const CounterDisplay = () => {
@@ -56,16 +57,23 @@ export const CounterDisplay = () => {
 
 
     return (
-        <div>
-            <ChangeNumbersValue showStartNumberValue={showStartNumberValue}
-                                setMessage={setMessage}
-                                setStartValueCount={setStartValueCount}/>
+        <div style={{display: "flex", justifyContent: "space-around"}}>
             <div>
-                {startValueCount}
-                {message}
+                <div className={s.locationDisplay}>
+                    <ChangeNumbersValue showStartNumberValue={showStartNumberValue}
+                                        setMessage={setMessage}
+                                        setStartValueCount={setStartValueCount}/>
+                </div>
+                <div>
+                    <div> {startValueCount}</div>
+                    <div> {message}</div>
+
+                </div>
             </div>
-            <SuperButton callback={onClickStartValue} name={"Вперед!"} stop={disabledButtonToStart()}/>
-            <SuperButton callback={resetValueHandler} name={"Öбнулись"} stop={disabledButtonToReset()}/>
+            <div >
+                <SuperButton callback={onClickStartValue} name={"Вперед!"} stop={disabledButtonToStart()}/>
+                <SuperButton callback={resetValueHandler} name={"Öбнулись"} stop={disabledButtonToReset()}/>
+            </div>
         </div>
     );
 };
